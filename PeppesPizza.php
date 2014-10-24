@@ -8,7 +8,25 @@ $dbh = new PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_SERVER . ';charset=utf8
 
 
 if($_GET["action"]=="Radera"){
-    "DELETE FROM `langos` WHERE 'id'";
+    $sql = "DELETE FROM langos WHERE id='".$_GET["id"]."'";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+}
+
+if($_GET["action"]=="uppdatera"){
+    $sql = "UPDATE langos SET Namn='".$_GET["namn"]."',`Topping`='".$_GET["topping"]."',`Pris`='".$_GET["pris"]."' WHERE id='".$_GET["id"]."'";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    //$stenugnsbakad = $stmt->fetchAll();
+    
+}
+
+if($_GET["action"]=="add"){
+    
+    $sql = "INSERT INTO `langos`(`id`, `Namn`, `Topping`, `Pris`) VALUES ('','".$_GET["namn"]."','".$_GET["topping"]."','".$_GET["pris"]."')";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    //$stenugnsbakad = $stmt->fetchAll();
 }
 
 //urvalsfråga
@@ -51,7 +69,6 @@ $stenugnsbakad = $stmt->fetchAll();
             echo $ugn["Pris"];
             echo "</td>";
             echo "<td>";
-            echo "<input type='submit' value='Uppdatera' name='action'>";
             echo "<input type='submit' value='Radera' name='action'>";
             echo "<input type='hidden' value='".$ugn["id"]."' name='id'>";
             echo "</td>";
@@ -65,23 +82,36 @@ $stenugnsbakad = $stmt->fetchAll();
         }
         echo "</table>";
         ?>
-        <!--            <form>
-                        <h4>Lägg till Namn</h4>
-                        <input type="text" name="laggTillNamn">
-                        <h4>Lägg till Topping</h4>
-                        <input type="text" name="laggTillTopping">
-                        <h4>Lägg till pris</h4>
-                        <input type="text" name="laggTillPris">
-                        <input type="submit" value="Lagg Till" action="add">
-                    </form>
-                        <br />
-                    <form>
-                        <input type="text" name="taBort"
-                    </form>    
-                        <br />
-                    <form>
-                        <input type="submit" value="Visa Beställningslista">
-                    </form>-->
+        <table>
+            <form>
+                <br />
+                <br />
+                <br />
+                <input type="text" value="namn" name="namn">
+                <br />
+                <input type="text" value="topping" name="topping">
+                <br />
+                <input type="text" value="pris" name="pris">
+                <br />
+                <input type="submit" value="add" name="action">
+            </form>
+        </table>
+       
+        <table>
+            <form>
+                <br />
+                <br />
+                <input type="text" value="id" name="id">
+                <br />
+                <input type="text" value="namn" name="namn">
+                <br />
+                <input type="text" value="topping" name="topping">
+                <br />
+                <input type="text" value="pris" name="pris">
+                <br />
+                <input type="submit" value="uppdatera" name="action">
+            </form>
+        </table>
 
     </body>
 </html>
