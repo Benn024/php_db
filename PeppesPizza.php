@@ -6,24 +6,28 @@ define("DB_PASSWORD", "");
 
 $dbh = new PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_SERVER . ';charset=utf8', DB_USER, DB_PASSWORD);
 
+$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+$namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
+$topping = filter_input(INPUT_POST, 'topping', FILTER_SANITIZE_SPECIAL_CHARS);
+$pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if($_GET["action"]=="Radera"){
-    $sql = "DELETE FROM langos WHERE id='".$_GET["id"]."'";
+if($_POST["action"]=="Radera"){
+    $sql = "DELETE FROM langos WHERE id='".$_POST["id"]."'";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 }
 
-if($_GET["action"]=="uppdatera"){
-    $sql = "UPDATE langos SET Namn='".$_GET["namn"]."',`Topping`='".$_GET["topping"]."',`Pris`='".$_GET["pris"]."' WHERE id='".$_GET["id"]."'";
+if($_POST["action"]=="uppdatera"){
+    
+    $sql = "UPDATE langos SET Namn='".$namn."',`Topping`='".$topping."',`Pris`='".$pris."' WHERE id='".$id."'";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
     //$stenugnsbakad = $stmt->fetchAll();
     
 }
 
-if($_GET["action"]=="add"){
-    
-    $sql = "INSERT INTO `langos`(`id`, `Namn`, `Topping`, `Pris`) VALUES ('','".$_GET["namn"]."','".$_GET["topping"]."','".$_GET["pris"]."')";
+if($_POST["action"]=="add"){
+    $sql = "INSERT INTO `langos`(`id`, `Namn`, `Topping`, `Pris`) VALUES ('','".$namn."','".$topping."','".$pris."')";
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
     //$stenugnsbakad = $stmt->fetchAll();
@@ -53,7 +57,7 @@ $stenugnsbakad = $stmt->fetchAll();
         echo "<br />";
         echo "<table border='1'>";
         foreach ($stenugnsbakad as $ugn) {
-            echo "<form class='knapp';>";
+            echo "<form method='POST' class='knapp';>";
 
             echo "<tr>";
             echo "<td>";
@@ -83,7 +87,7 @@ $stenugnsbakad = $stmt->fetchAll();
         echo "</table>";
         ?>
         <table>
-            <form>
+            <form method='POST'>
                 <br />
                 <br />
                 <br />
@@ -98,7 +102,7 @@ $stenugnsbakad = $stmt->fetchAll();
         </table>
        
         <table>
-            <form>
+            <form method='POST'>
                 <br />
                 <br />
                 <input type="text" value="id" name="id">
