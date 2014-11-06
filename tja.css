@@ -1,0 +1,24 @@
+#sak{
+
+}
+
+#wrapper{
+
+    margin: 0 auto;
+    width: 1020px;
+    border: solid thin black;
+    box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.75);
+    -moz-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.75);
+    -webkit-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.75);
+}
+
+#ruta{
+
+    width: 850px;
+    margin-left: 90px;
+
+
+}
+#update{
+    
+}
